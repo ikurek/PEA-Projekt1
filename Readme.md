@@ -28,13 +28,13 @@ Przyjmijmy, że naszym wieszchołkiem startowym będzie wierzchołek przedstawio
 Dla każdej z możliwych dróg, rozpatrzmy możliwość dalszego ruchu.
 
 * _koszt(0 -> 1)_ = 5
- * _koszt(0 -> 1 -> 2)_ = _koszt(0 -> 1)_ + _koszt(1 -> 2)_ = 5 + 13 = 18
- * _koszt(0 -> 1 -> 3)_ = _koszt(0 -> 1)_ + _koszt(1 -> 3)_ = 5 + 8 = 13
+    * _koszt(0 -> 1 -> 2)_ = _koszt(0 -> 1)_ + _koszt(1 -> 2)_ = 5 + 13 = 18
+    * _koszt(0 -> 1 -> 3)_ = _koszt(0 -> 1)_ + _koszt(1 -> 3)_ = 5 + 8 = 13
 * _koszt(0 -> 2)_ = 6
- * _koszt(0 -> 2 -> 1)_ = _koszt(0 -> 2)_ + _koszt(2 -> 1)_ = 6 + 9 = 15
- * _koszt(0 -> 2 -> 3)_ = _koszt(0 -> 2)_ + _koszt(2 -> 3)_ = 6 + 9 = 15
+    * _koszt(0 -> 2 -> 1)_ = _koszt(0 -> 2)_ + _koszt(2 -> 1)_ = 6 + 9 = 15
+    * _koszt(0 -> 2 -> 3)_ = _koszt(0 -> 2)_ + _koszt(2 -> 3)_ = 6 + 9 = 15
 * _koszt(0 -> 3)_ = 8
- * _koszt(0 -> 3 -> 1)_ = _koszt(0 -> 3)_ + _koszt(3 -> 1)_ = 8 + 10 = 18
- * _koszt(0 -> 3 -> 2)_ = _koszt(0 -> 3)_ + _koszt(3 -> 2)_ = 8 + 12 = 20
+    * _koszt(0 -> 3 -> 1)_ = _koszt(0 -> 3)_ + _koszt(3 -> 1)_ = 8 + 10 = 18
+    * _koszt(0 -> 3 -> 2)_ = _koszt(0 -> 3)_ + _koszt(3 -> 2)_ = 8 + 12 = 20
 
 Na tym etapie można już zauważyć, że wartości kolejnych sprawdzanych dróg, zależne są od poprzednich. Problem, którego rozwiązanie próbujemy znaleźć da się więc rozwiązać, znajdując rozwiązanie opisującej go funkcji rekurencyjnej. Zobaczmy jak wygląda kolejny krok, przyjmując minimalne wartości z poprzednich:
