@@ -2,13 +2,14 @@ mod file_reader;
 mod print_utils;
 mod brute_force_solution;
 mod dynamic_programing_solution;
+mod graph_generator;
 
 use std::io;
 use file_reader::file_reader as FileReaderModule;
 use print_utils::print_utils as PrintUtlisModule;
 use brute_force_solution::brute_force_solution as BruteForceSolution;
 use dynamic_programing_solution::dynamic_programing_solution as DynamicProgramingSolution;
-
+use graph_generator::graph_generator as GraphGenerator;
 
 
 fn main() {
@@ -27,8 +28,9 @@ fn main() {
         println!("");
         println!("Wybierz funkcję:");
         println!("1. Wczytaj plik z grafem");
-        println!("2. Programowanie Dynamiczne");
-        println!("3. Przegląd zupełny");
+        println!("2. Wygeneruj losowy graf");
+        println!("3. Programowanie Dynamiczne");
+        println!("4. Przegląd zupełny");
         println!("0. Wyjście");
         println!("Wybór: ");
 
@@ -56,13 +58,26 @@ fn main() {
                 PrintUtlisModule::print_matrix(&matrix);
             }
             2 => {
+                let mut number_of_nodes : String = String::new();
+                println!("Ilość wierzchołków:");
+                io::stdin().read_line(&mut number_of_nodes)
+                    .expect("Błąd wejścia/wyjścia");
+
+                let mut number_of_nodes : i32 = number_of_nodes.trim().parse()
+                    .expect("Błędna wartość");
+                
+                matrix = GraphGenerator::generate_random_graph(number_of_nodes);
+                PrintUtlisModule::print_matrix(&matrix);
+
+            }
+            3 => {
                 if matrix.is_empty() {
                     println!("Najpierw wczytaj graf z pliku!");
                 } else {
-                    DynamicProgramingSolution::solve(&matrix)
+                    DynamicProgramingSolution::solve(&matrix);
                 }
             }
-            3 => {
+            4 => {
                 if matrix.is_empty() {
                     println!("Najpierw wczytaj graf z pliku!");
                 } else {

@@ -1,13 +1,15 @@
 extern crate permutohedron;
 
 pub mod brute_force_solution {
-
     use brute_force_solution::permutohedron::LexicalPermutation;
+    use std::time::Instant;
 
     pub fn solve(matrix: &Vec<Vec<i32>>) {
 
+        //Inicjalizacja zmiennej do pomiaru czasu
+        let now = Instant::now();
         //Tablica zawierająca listę przystkich wierzchołków
-        let mut nodes = [0, 1, 2, 3];
+        let mut nodes : Vec<i32> = (0..matrix.len() as i32).collect();
         //Tablica zawierająca wszystkie możliwe permutacje wierzchołków
         let mut permutations = Vec::new();
         //Zmienna przechowująca permutację z najlepszą ścieżką
@@ -17,7 +19,11 @@ pub mod brute_force_solution {
 
         //Generowanie permutacji do tablicy
         loop {
-            permutations.push(nodes.to_vec());
+            let mut permutation = nodes.to_vec();
+            let mut starting_node = permutation[0];
+            //Ustawia powrót do wierzchołka początkowego
+            permutation.push(starting_node);
+            permutations.push(permutation);
 
             if !nodes.next_permutation() {
                 break;
@@ -50,6 +56,8 @@ pub mod brute_force_solution {
         }
 
         println!("Najlepsza trasa: {:?}, Koszt: {}", best_road, best_road_value);
+        let elapsed_time = now.elapsed();
+        println!("Czas wykonania algorytmu: {}ms", (elapsed_time.as_secs() * 1_000) + (elapsed_time.subsec_nanos() / 1_000_000) as u64);
     }
 
 }
