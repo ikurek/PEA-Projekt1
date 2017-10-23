@@ -4,6 +4,7 @@ pub mod brute_force_solution {
     use brute_force_solution::permutohedron::LexicalPermutation;
     use std::time::Instant;
 
+    //Rozwiązuje problem komiwojażera przy pomocy algorytmu przeglądu zupełnego
     pub fn solve(matrix: &Vec<Vec<i32>>) {
 
         //Inicjalizacja zmiennej do pomiaru czasu
@@ -18,13 +19,17 @@ pub mod brute_force_solution {
         let mut best_road_value: i32 = <i32>::max_value();
 
         //Generowanie permutacji do tablicy
+        println!("Generowanie permutacji...");
         loop {
+            //Pobranie permutacji z tablicy nodes jako wektor
             let mut permutation = nodes.to_vec();
-            let mut starting_node = permutation[0];
-            //Ustawia powrót do wierzchołka początkowego
+            //Ustawia pierwszy wierzchołek permutacji jako końcowy
+            let starting_node = permutation[0];
             permutation.push(starting_node);
+            //Dodaje permutację do zbioru permutacji
             permutations.push(permutation);
 
+            //Pętla kończy się, gdy nie ma kolejnej permutacji
             if !nodes.next_permutation() {
                 break;
             }

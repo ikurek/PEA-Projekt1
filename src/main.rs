@@ -63,7 +63,7 @@ fn main() {
                 io::stdin().read_line(&mut number_of_nodes)
                     .expect("Błąd wejścia/wyjścia");
 
-                let mut number_of_nodes : i32 = number_of_nodes.trim().parse()
+                let number_of_nodes : i32 = number_of_nodes.trim().parse()
                     .expect("Błędna wartość");
                 
                 matrix = GraphGenerator::generate_random_graph(number_of_nodes);
