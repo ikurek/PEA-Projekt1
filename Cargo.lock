@@ -2,6 +2,7 @@
 name = "projekt1"
 version = "0.1.0"
 dependencies = [
+ "num-traits 0.1.40 (registry+https://github.com/rust-lang/crates.io-index)",
  "permutohedron 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.17 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -33,6 +34,11 @@ version = "0.2.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "num-traits"
+version = "0.1.40"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "permutohedron"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -51,5 +57,6 @@ dependencies = [
 "checksum fuchsia-zircon 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "f6c0581a4e363262e52b87f59ee2afe3415361c6ec35e665924eb08afe8ff159"
 "checksum fuchsia-zircon-sys 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "43f3795b4bae048dc6123a6b972cadde2e676f9ded08aef6bb77f5f157684a82"
 "checksum libc 0.2.32 (registry+https://github.com/rust-lang/crates.io-index)" = "56cce3130fd040c28df6f495c8492e5ec5808fb4c9093c310df02b0c8f030148"
+"checksum num-traits 0.1.40 (registry+https://github.com/rust-lang/crates.io-index)" = "99843c856d68d8b4313b03a17e33c4bb42ae8f6610ea81b28abe076ac721b9b0"
 "checksum permutohedron 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "15205169997d28cfdc18e44d18bd34b70a0322a213e57bb968c22858ea70304f"
 "checksum rand 0.3.17 (registry+https://github.com/rust-lang/crates.io-index)" = "61efcbcd9fa8d8fbb07c84e34a8af18a1ff177b449689ad38a6e9457ecc7b2ae"
