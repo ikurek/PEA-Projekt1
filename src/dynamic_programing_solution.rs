@@ -78,20 +78,33 @@ pub mod dynamic_programing_solution {
                 //Iloczyn bitowy, sprawdzający wzystkie opcje ze zbioru połączenia
                 masked = set & mask;
                 //Jeżeli dana opcja istnieje w zbiorze połączeń
-                //TODO: co się odpierdala?
                 if masked != set {
+                    //Wykonaj kolejną rekurencję, uwzględniając wartość poprzedniej ścieżki
                     temp = matrix[start as usize][i as usize] + recurring_tsp_step(i as i32, masked, &connections, &mut paths, number_of_cities, power, matrix);
-
+                    //Jeżeli kolejny uzyskany wynik jest mniejszy op poprzedniego, oznac go jako minimalny
                     if result == -1 || result > temp {
                         result = temp;
                         paths[start as usize][set as usize] = i as i32;
                     }
                 }
             }
-
+            //Zapisz wynik dla danego połączenia w tablicy
             connections[start as usize][set as usize] == result;
 
             return result;
+        }
+    }
+
+    fn get_path(start : i32, set : i32, power : i32, path_array : Vec<i32>) {
+        if(path[start as usize][set as usize] == -1) {
+            return;
+        } else {
+            let mask : i32 = power - 1 - pow(2, path[start as usize][set as usize]);
+            let masked : i32 = set & mask;
+
+            path_array.push(path[start as usize][set as usize]);
+            get_path(path[start as usize][set as usize], masked, )
+
         }
     }
 }
