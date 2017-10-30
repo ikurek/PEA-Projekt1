@@ -11,7 +11,7 @@ pub mod brute_force_solution {
         //Inicjalizacja zmiennej do pomiaru czasu
         let now = Instant::now();
         //Tablica zawierająca listę przystkich wierzchołków
-        let mut nodes : Vec<i32> = (0..matrix.len() as i32).collect();
+        let mut nodes: Vec<i32> = (0..matrix.len() as i32).collect();
         //Tablica zawierająca wszystkie możliwe permutacje wierzchołków
         let mut permutations = Vec::new();
         //Zmienna przechowująca permutację z najlepszą ścieżką
@@ -47,8 +47,7 @@ pub mod brute_force_solution {
             let mut index: i32 = 0;
 
             while (index + 1) < permutation.len() as i32 {
-                road_value = road_value +
-                    matrix[permutation[index as usize] as usize][permutation[(index + 1) as usize] as usize];
+                road_value = road_value + matrix[permutation[index as usize] as usize][permutation[(index + 1) as usize] as usize];
                 index = index + 1;
             }
 
@@ -60,7 +59,11 @@ pub mod brute_force_solution {
 
         let elapsed_time = now.elapsed();
         println!("Zakończono!");
-        PrintUtlisModule::print_result(best_road_value, best_road, elapsed_time.subsec_nanos() as i32);
+        PrintUtlisModule::print_result(
+            best_road_value,
+            best_road,
+            elapsed_time.subsec_nanos() as i32,
+        );
     }
 
 }

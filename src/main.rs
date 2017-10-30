@@ -14,6 +14,7 @@ use graph_generator::graph_generator as GraphGenerator;
 
 fn main() {
 
+    println!("");
     println!("Projektowanie Efektywnych Algorytmów - Zadanie 1");
     println!("Problem komiwojażera (TSP)");
     println!("Igor Kurek, 226004");
@@ -35,18 +36,16 @@ fn main() {
         println!("Wybór: ");
 
         //Wczytaj odpowiedź użytkownika
-        io::stdin().read_line(&mut selected_number)
-            .expect("Błąd wejścia/wyjścia");
+        io::stdin().read_line(&mut selected_number).expect(
+            "Błąd wejścia/wyjścia",
+        );
 
         //Zmień typ odpowiedzi na integer
-        let selected_number: u32 = selected_number.trim().parse()
-            .expect("Błędna wartość");
+        let selected_number: u32 = selected_number.trim().parse().expect("Błędna wartość");
 
         //Podejmij akcję w zalezności od wyboru użytkownika
         match selected_number {
-            0 => {
-                std::process::exit(0x0)
-            }
+            0 => std::process::exit(0x0),
             1 => {
                 //TODO: Nie chce mi się tego za każdym razem wpisywać
                 //let mut file_name = String::new();
@@ -58,14 +57,14 @@ fn main() {
                 PrintUtlisModule::print_matrix(&matrix);
             }
             2 => {
-                let mut number_of_nodes : String = String::new();
+                let mut number_of_nodes: String = String::new();
                 println!("Ilość wierzchołków:");
-                io::stdin().read_line(&mut number_of_nodes)
-                    .expect("Błąd wejścia/wyjścia");
+                io::stdin().read_line(&mut number_of_nodes).expect(
+                    "Błąd wejścia/wyjścia",
+                );
 
-                let number_of_nodes : i32 = number_of_nodes.trim().parse()
-                    .expect("Błędna wartość");
-                
+                let number_of_nodes: i32 = number_of_nodes.trim().parse().expect("Błędna wartość");
+
                 matrix = GraphGenerator::generate_random_graph(number_of_nodes);
                 PrintUtlisModule::print_matrix(&matrix);
 
@@ -84,9 +83,7 @@ fn main() {
                     BruteForceSolution::solve(&matrix);
                 }
             }
-            _ => {
-                println!("Niepoprawna wartość!")
-            }
+            _ => println!("Niepoprawna wartość!"),
         };
     }
 }

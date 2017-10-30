@@ -14,7 +14,11 @@ pub mod file_reader {
         //Stworzenie zmiennej plikowej
         let file = match File::open(&file_name) {
             Err(error) => {
-                panic!("At the Disco! Couldn't open {}: {}", &file_name, Error::description(&error))
+                panic!(
+                    "At the Disco! Couldn't open {}: {}",
+                    &file_name,
+                    Error::description(&error)
+                )
             }
             Ok(file) => file,
         };
@@ -43,7 +47,7 @@ pub mod file_reader {
                 Err(error) => println!("Błąd pliku: {}", error),
             }
         }
-        
+
         return matrix;
     }
 
