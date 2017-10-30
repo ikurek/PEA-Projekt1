@@ -1,15 +1,16 @@
 extern crate permutohedron;
+extern crate time;
 
 pub mod brute_force_solution {
     use brute_force_solution::permutohedron::LexicalPermutation;
+    use brute_force_solution::time::PreciseTime;
     use print_utils::print_utils as PrintUtlisModule;
-    use std::time::Instant;
 
     //Rozwiązuje problem komiwojażera przy pomocy algorytmu przeglądu zupełnego
     pub fn solve(matrix: &Vec<Vec<i32>>) {
 
         //Inicjalizacja zmiennej do pomiaru czasu
-        let now = Instant::now();
+        let timer_start = PreciseTime::now();
         //Tablica zawierająca listę przystkich wierzchołków
         let mut nodes: Vec<i32> = (0..matrix.len() as i32).collect();
         //Tablica zawierająca wszystkie możliwe permutacje wierzchołków
@@ -57,13 +58,10 @@ pub mod brute_force_solution {
             }
         }
 
-        let elapsed_time = now.elapsed();
+        let timer_stop = PreciseTime::now();
+        let duration_in_ns = timer_start.to(timer_stop).num_nanoseconds().unwrap();
         println!("Zakończono!");
-        PrintUtlisModule::print_result(
-            best_road_value,
-            best_road,
-            elapsed_time.subsec_nanos() as i32,
-        );
+        PrintUtlisModule::print_result(best_road_value, best_road, duration_in_ns);
     }
 
 }

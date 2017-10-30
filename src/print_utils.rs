@@ -11,12 +11,12 @@ pub mod print_utils {
         }
     }
 
-    pub fn print_result(result: i32, result_path: Vec<i32>, elapsed_time: i32) {
+    pub fn print_result(result: i32, result_path: Vec<i32>, elapsed_time: i64) {
         println!("");
         println!("****************************************************************");
         println!("Trasa: {:?}", result_path);
         println!("Koszt: {}", result);
-        println!("Czas: {}", elapsed_time);
+        println!("Czas: {}ns", elapsed_time);
         println!("****************************************************************");
         println!("");
     }

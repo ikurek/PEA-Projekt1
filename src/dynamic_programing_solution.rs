@@ -1,7 +1,8 @@
 extern crate num_traits;
+extern crate time;
 
 pub mod dynamic_programing_solution {
-    use std::time::Instant;
+    use dynamic_programing_solution::time::PreciseTime;
     use dynamic_programing_solution::num_traits::pow;
     use print_utils::print_utils as PrintUtlisModule;
 
@@ -10,7 +11,7 @@ pub mod dynamic_programing_solution {
         println!("Liczenie...");
 
         //Inicjalizacja zmiennej czasowej
-        let now = Instant::now();
+        let timer_start = PreciseTime::now();
         //Wierzchołek początkowy
         let start: i32 = 0;
         //Liczba miast
@@ -58,14 +59,15 @@ pub mod dynamic_programing_solution {
             &power,
             &matrix,
         );
-        let elapsed = now.elapsed();
+        let timer_stop = PreciseTime::now();
+        let duration_in_ns = timer_start.to(timer_stop).num_nanoseconds().unwrap();
         //Pobiera kolejne wierchołki najkrótszej scieżki
         result_path = get_path(&mut paths, &mut result_path, &power, start, power - 2);
         //Dodaje do tablicy ostatni wierchołek, jako wierzchołek końcowy
         result_path.push(start);
         //Drukuje informacje o wyniku
         println!("Zakończono!");
-        PrintUtlisModule::print_result(result, result_path, elapsed.subsec_nanos() as i32);
+        PrintUtlisModule::print_result(result, result_path, duration_in_ns);
 
     }
 
