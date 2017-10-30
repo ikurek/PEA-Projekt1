@@ -3,21 +3,29 @@ extern crate num_traits;
 pub mod dynamic_programing_solution {
     use std::time::Instant;
     use dynamic_programing_solution::num_traits::pow;
+    use print_utils::print_utils as PrintUtlisModule;
 
     //Rozwiązuje problem komiwojażera przy pomocy algorytmu programowania dynamicznego
     pub fn solve(matrix : &Vec<Vec<i32>>) {
-
-        //Inicjalizacja zmiennej czasowej
-        let now = Instant::now();
         println!("Liczenie...");
         calculate_tsp(matrix, matrix.len());
-        
+
     }
 
     fn calculate_tsp(matrix : &Vec<Vec<i32>>, number_of_cities : usize) {
 
+        //Inicjalizacja zmiennej czasowej
+        let now = Instant::now();
+        //Wierzchołek początkowy
+        let start : i32 = 0;
         //Odpowiednia potęga liczby 2, reprezentująca ilość podproblemów
         let power : i32 = pow(2i32, number_of_cities);
+        //Zmienna przechowująca wartość najkrótszej ścieżki
+        let mut result : i32;
+        //Tablica przechowująca wszystkie kolejne wierzchołki w najkrótszej ścieżce
+        //Na początku zawiera jedynie wierzchołek startowy
+        let mut result_path : Vec<i32> = Vec::new();
+        result_path.push(start);
         //Macierze przechowujące wygenerowane ścieżki
         let mut connections : Vec<Vec<i32>> = Vec::new();
         let mut paths : Vec<Vec<i32>> = Vec::new();
@@ -43,9 +51,16 @@ pub mod dynamic_programing_solution {
             connections[i][0] = matrix[i][0];
         }
 
-        let mut result = recurring_tsp_step(0, power - 2, &connections, &mut paths, number_of_cities, &power, &matrix);
-
-        println!("result: {}", result);
+        //Wylicza wynik, wywołując kolejne rekurencje algorytmu Helda-Karpa
+        result = recurring_tsp_step(start, power - 2, &connections, &mut paths, number_of_cities, &power, &matrix);
+        let elapsed = now.elapsed();
+        //Pobiera kolejne wierchołki najkrótszej scieżki
+        result_path = get_path(&mut paths, &mut result_path, &power, start, power - 2);
+        //Dodaje do tablicy ostatni wierchołek, jako wierzchołek końcowy
+        result_path.push(start);
+        //Drukuje informacje o wyniku
+        println!("Zakończono!");
+        PrintUtlisModule::print_result(result, result_path, elapsed.subsec_nanos() as i32);
 
     }
 
@@ -71,7 +86,7 @@ pub mod dynamic_programing_solution {
         if connections[start as usize][set as usize] != -1 {
             return connections[start as usize][set as usize]
         } else {
-            //jeżeli połączeni nie istnieje, należy je sprawdzić
+            //jeżeli połączenie nie istnieje, należy je sprawdzić
             for i in 0..number_of_cities {
                 //aktualna maska to maska maksymalna, pomniejszona o 1 i odpowiednią potegę liczby 2
                 mask = power - 1 - pow(2, i);
@@ -81,7 +96,7 @@ pub mod dynamic_programing_solution {
                 if masked != set {
                     //Wykonaj kolejną rekurencję, uwzględniając wartość poprzedniej ścieżki
                     temp = matrix[start as usize][i as usize] + recurring_tsp_step(i as i32, masked, &connections, &mut paths, number_of_cities, power, matrix);
-                    //Jeżeli kolejny uzyskany wynik jest mniejszy op poprzedniego, oznac go jako minimalny
+                    //Jeżeli kolejny uzyskany wynik jest mniejszy od poprzedniego, oznac go jako minimalny
                     if result == -1 || result > temp {
                         result = temp;
                         paths[start as usize][set as usize] = i as i32;
@@ -95,16 +110,20 @@ pub mod dynamic_programing_solution {
         }
     }
 
-    fn get_path(start : i32, set : i32, power : i32, path_array : Vec<i32>) {
-        if(path[start as usize][set as usize] == -1) {
-            return;
+    fn get_path(mut paths : &Vec<Vec<i32>>, mut result_path : &mut Vec<i32>, power : &i32, start : i32, set : i32) -> Vec<i32> {
+
+        //Powtarza kroki algorytmu, zapisując do tablicy jedynie numery kolejnych wierzchołków
+        let mut currentNode = paths[start as usize][set as usize];
+        if currentNode == -1 {
+            return result_path.to_vec();
         } else {
-            let mask : i32 = power - 1 - pow(2, path[start as usize][set as usize]);
-            let masked : i32 = set & mask;
+            let mut mask = power - 1 - pow(2, currentNode as usize);
+            let mut masked = set & mask;
 
-            path_array.push(path[start as usize][set as usize]);
-            get_path(path[start as usize][set as usize], masked, )
-
+            result_path.push(currentNode);
+            get_path(&mut paths, &mut result_path, &power, currentNode, masked);
         }
+
+        return result_path.to_vec();
     }
 }

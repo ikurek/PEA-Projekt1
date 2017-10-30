@@ -2,6 +2,7 @@ extern crate permutohedron;
 
 pub mod brute_force_solution {
     use brute_force_solution::permutohedron::LexicalPermutation;
+    use print_utils::print_utils as PrintUtlisModule;
     use std::time::Instant;
 
     //Rozwiązuje problem komiwojażera przy pomocy algorytmu przeglądu zupełnego
@@ -36,7 +37,7 @@ pub mod brute_force_solution {
         }
 
         println!("Całkowita liczba permutacji: {}", permutations.len());
-        println!("");
+        println!("Liczenie...");
 
 
         //Sprawdzenie każdej permutacji
@@ -55,14 +56,11 @@ pub mod brute_force_solution {
                 best_road_value = road_value;
                 best_road = permutation.to_vec();
             }
-
-            println!("Permutacja: {:?}, Koszt: {}", permutation, road_value);
-
         }
 
-        println!("Najlepsza trasa: {:?}, Koszt: {}", best_road, best_road_value);
         let elapsed_time = now.elapsed();
-        println!("Czas wykonania algorytmu: {}ms", (elapsed_time.as_secs() * 1_000) + (elapsed_time.subsec_nanos() / 1_000_000) as u64);
+        println!("Zakończono!");
+        PrintUtlisModule::print_result(best_road_value, best_road, elapsed_time.subsec_nanos() as i32);
     }
 
 }
