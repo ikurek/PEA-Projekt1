@@ -5,9 +5,29 @@ pub mod brute_force_solution {
     use brute_force_solution::permutohedron::LexicalPermutation;
     use brute_force_solution::time::PreciseTime;
     use print_utils::print_utils as PrintUtlisModule;
+    use graph_generator::graph_generator as GraphGeneratorModule;
+
+    pub fn solve_multiple(number_of_nodes: i32, number_of_tests: i32) {
+        let mut matrix: Vec<Vec<i32>> = Vec::new();
+        let mut times: Vec<i64> = Vec::new();
+        let mut average: i64 = 0;
+
+        for i in 0..number_of_tests {
+            println!("Test {}", i);
+            matrix = GraphGeneratorModule::generate_random_graph(number_of_nodes);
+            times.push(solve(&matrix, false));
+        }
+
+        for x in &times {
+            average = average + x;
+        }
+
+        average = average / (times.len() as i64);
+        println!("Średni czas: {}ns", average);
+    }
 
     //Rozwiązuje problem komiwojażera przy pomocy algorytmu przeglądu zupełnego
-    pub fn solve(matrix: &Vec<Vec<i32>>) {
+    pub fn solve(matrix: &Vec<Vec<i32>>, print_info: bool) -> i64 {
 
         //Inicjalizacja zmiennej do pomiaru czasu
         let timer_start = PreciseTime::now();
@@ -21,7 +41,9 @@ pub mod brute_force_solution {
         let mut best_road_value: i32 = <i32>::max_value();
 
         //Generowanie permutacji do tablicy
-        println!("Generowanie permutacji...");
+        if print_info {
+            println!("Generowanie permutacji...");
+        }
         loop {
             //Pobranie permutacji z tablicy nodes jako wektor
             let mut permutation = nodes.to_vec();
@@ -37,9 +59,10 @@ pub mod brute_force_solution {
             }
         }
 
-        println!("Całkowita liczba permutacji: {}", permutations.len());
-        println!("Liczenie...");
-
+        if print_info {
+            println!("Całkowita liczba permutacji: {}", permutations.len());
+            println!("Liczenie...");
+        }
 
         //Sprawdzenie każdej permutacji
         for permutation in permutations {
@@ -60,8 +83,11 @@ pub mod brute_force_solution {
 
         let timer_stop = PreciseTime::now();
         let duration_in_ns = timer_start.to(timer_stop).num_nanoseconds().unwrap();
-        println!("Zakończono!");
-        PrintUtlisModule::print_result(best_road_value, best_road, duration_in_ns);
+        if print_info {
+            println!("Zakończono!");
+            PrintUtlisModule::print_result(best_road_value, best_road, duration_in_ns);
+        }
+        return duration_in_ns;
     }
 
 }

@@ -5,10 +5,34 @@ pub mod dynamic_programing_solution {
     use dynamic_programing_solution::time::PreciseTime;
     use dynamic_programing_solution::num_traits::pow;
     use print_utils::print_utils as PrintUtlisModule;
+    use graph_generator::graph_generator as GraphGeneratorModule;
+
+    pub fn solve_multiple(number_of_nodes: i32, number_of_tests: i32) {
+        let mut matrix: Vec<Vec<i32>> = Vec::new();
+        let mut times: Vec<i64> = Vec::new();
+        let mut average: i64 = 0;
+
+        for i in 0..number_of_tests {
+            println!("Test {}", i);
+            matrix = GraphGeneratorModule::generate_random_graph(number_of_nodes);
+            times.push(solve(&matrix, false));
+        }
+
+        for x in &times {
+            average = average + x;
+        }
+
+        average = average / (times.len() as i64);
+        println!("Średni czas: {}ns", average);
+    }
 
     //Rozwiązuje problem komiwojażera przy pomocy algorytmu programowania dynamicznego
-    pub fn solve(matrix: &Vec<Vec<i32>>) {
-        println!("Liczenie...");
+    //Zwraca czas wykonania algorytmu w nanosekundach
+    pub fn solve(matrix: &Vec<Vec<i32>>, print_info: bool) -> i64 {
+
+        if (print_info) {
+            println!("Liczenie...");
+        }
 
         //Inicjalizacja zmiennej czasowej
         let timer_start = PreciseTime::now();
@@ -66,8 +90,11 @@ pub mod dynamic_programing_solution {
         //Dodaje do tablicy ostatni wierchołek, jako wierzchołek końcowy
         result_path.push(start);
         //Drukuje informacje o wyniku
-        println!("Zakończono!");
-        PrintUtlisModule::print_result(result, result_path, duration_in_ns);
+        if (print_info) {
+            println!("Zakończono!");
+            PrintUtlisModule::print_result(result, result_path, duration_in_ns);
+        }
+        return duration_in_ns;
 
     }
 

@@ -30,8 +30,10 @@ fn main() {
         println!("Wybierz funkcję:");
         println!("1. Wczytaj plik z grafem");
         println!("2. Wygeneruj losowy graf");
-        println!("3. Programowanie Dynamiczne");
+        println!("3. Programowanie dynamiczne");
         println!("4. Przegląd zupełny");
+        println!("5. Programowanie dynamiczne (Testy uśrednione)");
+        println!("6. Przegląd zupełny (Testy uśrednione)");
         println!("0. Wyjście");
         println!("Wybór: ");
 
@@ -47,13 +49,13 @@ fn main() {
         match selected_number {
             0 => std::process::exit(0x0),
             1 => {
-                //TODO: Nie chce mi się tego za każdym razem wpisywać
-                //let mut file_name = String::new();
-                //println!("Nazwa pliku: ");
-                //io::stdin().read_line(&mut file_name)
-                //  .expect("Błąd wejścia/wyjścia");
-                //matrix = FileReaderModule::read_file(String::from(file_name.trim()));
-                matrix = FileReaderModule::read_file(String::from("test_file.txt"));
+                let mut file_name = String::new();
+                println!("Nazwa pliku: ");
+                io::stdin().read_line(&mut file_name).expect(
+                    "Błąd wejścia/wyjścia",
+                );
+                matrix = FileReaderModule::read_file(String::from(file_name.trim()));
+                //matrix = FileReaderModule::read_file(String::from("test_file.txt"));
                 PrintUtlisModule::print_matrix(&matrix);
             }
             2 => {
@@ -73,15 +75,51 @@ fn main() {
                 if matrix.is_empty() {
                     println!("Najpierw wczytaj graf z pliku!");
                 } else {
-                    DynamicProgramingSolution::solve(&matrix);
+                    DynamicProgramingSolution::solve(&matrix, true);
                 }
             }
             4 => {
                 if matrix.is_empty() {
                     println!("Najpierw wczytaj graf z pliku!");
                 } else {
-                    BruteForceSolution::solve(&matrix);
+                    BruteForceSolution::solve(&matrix, true);
                 }
+            }
+            5 => {
+                let mut number_of_nodes: String = String::new();
+                println!("Ilość wierzchołków:");
+                io::stdin().read_line(&mut number_of_nodes).expect(
+                    "Błąd wejścia/wyjścia",
+                );
+                let number_of_nodes: i32 = number_of_nodes.trim().parse().expect("Błędna wartość");
+
+                let mut number_of_tests: String = String::new();
+                println!("Ilość testów:");
+                io::stdin().read_line(&mut number_of_tests).expect(
+                    "Błąd wejścia/wyjścia",
+                );
+                let number_of_tests: i32 = number_of_tests.trim().parse().expect("Błędna wartość");
+
+                DynamicProgramingSolution::solve_multiple(number_of_nodes, number_of_tests);
+
+            }
+            6 => {
+                let mut number_of_nodes: String = String::new();
+                println!("Ilość wierzchołków:");
+                io::stdin().read_line(&mut number_of_nodes).expect(
+                    "Błąd wejścia/wyjścia",
+                );
+                let number_of_nodes: i32 = number_of_nodes.trim().parse().expect("Błędna wartość");
+
+                let mut number_of_tests: String = String::new();
+                println!("Ilość testów:");
+                io::stdin().read_line(&mut number_of_tests).expect(
+                    "Błąd wejścia/wyjścia",
+                );
+                let number_of_tests: i32 = number_of_tests.trim().parse().expect("Błędna wartość");
+
+                BruteForceSolution::solve_multiple(number_of_nodes, number_of_tests);
+
             }
             _ => println!("Niepoprawna wartość!"),
         };
