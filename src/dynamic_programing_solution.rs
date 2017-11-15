@@ -77,7 +77,7 @@ pub mod dynamic_programing_solution {
         result = recurring_tsp_step(
             start,
             power - 2,
-            &connections,
+            &mut connections,
             &mut paths,
             number_of_cities,
             &power,
@@ -101,7 +101,7 @@ pub mod dynamic_programing_solution {
     fn recurring_tsp_step(
         start: i32,
         set: i32,
-        connections: &Vec<Vec<i32>>,
+        mut connections: &mut Vec<Vec<i32>>,
         mut paths: &mut Vec<Vec<i32>>,
         number_of_cities: usize,
         power: &i32,
@@ -135,7 +135,7 @@ pub mod dynamic_programing_solution {
                         recurring_tsp_step(
                             i as i32,
                             masked,
-                            &connections,
+                            &mut connections,
                             &mut paths,
                             number_of_cities,
                             power,
@@ -149,7 +149,7 @@ pub mod dynamic_programing_solution {
                 }
             }
             //Zapisz wynik dla danego połączenia w tablicy
-            connections[start as usize][set as usize] == result;
+            connections[start as usize][set as usize] = result;
 
             return result;
         }
