@@ -48,7 +48,8 @@ pub mod dynamic_programing_solution {
         //Na początku zawiera jedynie wierzchołek startowy
         let mut result_path: Vec<i32> = Vec::new();
         result_path.push(start);
-        //Macierze przechowujące wygenerowane ścieżki
+        //Macierze przechowujące maski bitowe
+        //Oraz wyliczone wartości podproblemów
         let mut connections: Vec<Vec<i32>> = Vec::new();
         let mut paths: Vec<Vec<i32>> = Vec::new();
 
@@ -111,7 +112,7 @@ pub mod dynamic_programing_solution {
         //Zmienne używane w pojedynczym przebiegu rekurencji
         //Maska
         let mut mask: i32;
-        //wierchołem maskowany
+        //wierzchołki maskowane
         let mut masked: i32;
         //ostatni znaleziony wynik
         let mut result: i32 = -1;
